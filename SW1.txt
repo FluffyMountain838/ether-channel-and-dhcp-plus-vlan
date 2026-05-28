@@ -1,0 +1,41 @@
+
+ena
+conf t
+hostname SW1
+
+vlan 10
+vlan 20
+vlan 30
+exit
+
+interface range gi0/1-2
+ channel-group 1 mode active
+interface port-channel 1
+ switchport mode trunk
+
+! Portok kiosztása (Példa kiosztás)
+interface range fa0/1-5
+ switchport mode access
+ switchport access vlan 10
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security mac-address sticky
+ spanning-tree portfast
+
+interface range fa0/6-10
+ switchport mode access
+ switchport access vlan 20
+ switchport port-security
+ switchport port-security maximum 1
+ spanning-tree portfast
+
+interface range fa0/11-15
+ switchport mode access
+ switchport access vlan 30
+ switchport port-security
+ switchport port-security maximum 1
+ spanning-tree portfast
+
+interface range fa0/16-24
+ shutdown
+
